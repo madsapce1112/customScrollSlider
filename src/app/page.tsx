@@ -9,13 +9,12 @@ export default function Home() {
     typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
   useIsomorphicLayoutEffect(() => {
-    gsap.to("#customScrollbar", {
+    let scrollTween = gsap.to("#customScrollbar", {
       y: 300,
       ease: "none",
       scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
+        start: 0,
+        end: "max",
         scrub: 1,
       },
     });
@@ -24,12 +23,18 @@ export default function Home() {
       type: "y",
       bounds: "#customScroll",
       throwProps: true,
+      onPress() {
+        scrollTween.scrollTrigger.disable(false);
+      },
       onDrag() {
-        let scrollBarHeight = 250; // 300-circle
-        let allSections = 15000; // 2 sections of 1000
-        let percent = (this.endY / scrollBarHeight) * 100; // path percentage
-        let to = (allSections / 100) * percent; // page coordinate at the same percentage
+        let progress = gsap.utils.normalize(this.minY, this.maxY, this.y);
+        let to = 15000 * progress;
         scrollTo(0, to);
+      },
+      onRelease() {
+        let progress = gsap.utils.normalize(this.minY, this.maxY, this.y);
+        scrollTween.scrollTrigger.enable();
+        scrollTween.progress(progress);
       },
     });
   }, []);
