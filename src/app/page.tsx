@@ -1,19 +1,16 @@
 "use client";
 import gsap from "gsap";
-import { Draggable, ScrollSmoother, ScrollTrigger } from "gsap/all";
-import { useEffect } from "react";
+import { Draggable, ScrollTrigger } from "gsap/all";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
-gsap.registerPlugin(ScrollTrigger, Draggable);
+gsap.registerPlugin(Draggable, ScrollTrigger);
 export default function Home() {
-  useEffect(() => {
-    // const smoother = ScrollSmoother.create({
-    //   smooth: 2,
-    //   effects: true,
-    //   smoothTouch: 0.1,
-    // });
+  const useIsomorphicLayoutEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+  useIsomorphicLayoutEffect(() => {
     gsap.to("#customScrollbar", {
-      y: 320,
+      y: 300,
       ease: "none",
       scrollTrigger: {
         trigger: "body",
@@ -28,11 +25,11 @@ export default function Home() {
       bounds: "#customScroll",
       throwProps: true,
       onDrag() {
-        // let scrollBarHeight = 250; // 300-circle
-        // let allSections = 2000; // 2 sections of 1000
-        // let percent = (this.endY / scrollBarHeight) * 100; // path percentage
-        // let to = (allSections / 100) * percent; // page coordinate at the same percentage
-        // smoother.scrollTo(to);
+        let scrollBarHeight = 250; // 300-circle
+        let allSections = 15000; // 2 sections of 1000
+        let percent = (this.endY / scrollBarHeight) * 100; // path percentage
+        let to = (allSections / 100) * percent; // page coordinate at the same percentage
+        scrollTo(0, to);
       },
     });
   }, []);
