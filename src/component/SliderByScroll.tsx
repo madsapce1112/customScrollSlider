@@ -39,17 +39,14 @@ export const SliderByScroll = ({
     gsap.to(window, { duration: 1, scrollTo: { y: progress * maxScroll } });
   };
 
+  console.log("scroll");
   return (
     <div
       id="customScroll"
-      className={`fixed left-10 top-10 h-96 flex flex-col justify-between after:absolute after:top-0 after:bottom-0  after:start-3.5 after:w-px after:-translate-x-[0.5px] ${
-        sliderDefaultColor ? 'after:' + sliderDefaultColor : "after:bg-gray-300"
-      }`}
+      className={`fixed left-10 top-10 h-96 flex flex-col justify-between after:absolute after:top-0 after:bottom-0  after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-300`}
     >
       <hr
-        className={`${
-          sliderActiveColor ? sliderActiveColor : "bg-blue-700"
-        } w-0.5 start-[13px] absolute transition-all duration-300`}
+        className={`bg-blue-700 w-0.5 start-[13px] absolute transition-all duration-300`}
         style={{ height: `${Number(scrollProgress) * 100}%` }}
       />
       {data.map((item, index: number) => (
@@ -64,24 +61,10 @@ export const SliderByScroll = ({
             <div
               className={`w-2 h-2 rounded-full border-2 border-white ${
                 Number(scrollProgress) >= index / (data.length - 1)
-                  ? sliderActiveColor
-                    ? sliderActiveColor
-                    : "bg-blue-700"
-                  : sliderDefaultColor
-                  ? sliderDefaultColor
+                  ? "bg-blue-700"
                   : "bg-gray-300"
               }`}
             ></div>
-          </div>
-
-          <div className="grow pt-0.5">
-            <h3
-              className={`flex gap-x-1.5 font-semibold ${
-                textColor ? textColor : "text-gray-800"
-              }`}
-            >
-              {item.subTitle}
-            </h3>
           </div>
         </div>
       ))}
