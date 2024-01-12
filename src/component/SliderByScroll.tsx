@@ -39,7 +39,6 @@ export const SliderByScroll = ({
     gsap.to(window, { duration: 1, scrollTo: { y: progress * maxScroll } });
   };
 
-  console.log("scroll");
   return (
     <div
       id="customScroll"
@@ -59,12 +58,30 @@ export const SliderByScroll = ({
         >
           <div className="relative z-10 w-7 h-7 flex justify-center items-center">
             <div
-              className={`w-2 h-2 rounded-full border-2 border-white ${
-                Number(scrollProgress) >= index / (data.length - 1)
-                  ? "bg-blue-700"
-                  : "bg-gray-300"
-              }`}
+              className={`rounded-full border-2 outline-dashed outline-2 outline-offset-2 
+                  border-blue-700 bg-white`}
+              style={{
+                width: "12px",
+                height: "12px",
+                outline: "dashed",
+                outlineWidth:
+                  Number(scrollProgress) >= index / (data.length - 1)
+                    ? "2px"
+                    : "0px",
+                outlineColor: "blue",
+                outlineOffset: "2px",
+              }}
             ></div>
+          </div>
+
+          <div className="grow pt-0.5">
+            <h3
+              className={`flex gap-x-1.5 font-semibold ${
+                textColor ? textColor : "text-gray-800"
+              }`}
+            >
+              {item.subTitle}
+            </h3>
           </div>
         </div>
       ))}
