@@ -1,42 +1,32 @@
 "use client";
-import gsap from "gsap";
-import { ScrollToPlugin, ScrollTrigger } from "gsap/all";
-import { useEffect, useLayoutEffect, useState } from "react";
 
-gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
+import { SliderByScroll } from "@/component/SliderByScroll";
+
 export default function Home() {
-  const [scrollProgress, setScrollProgress] = useState<string>("");
-  const [maxScroll, setMaxScroll] = useState<number>(0);
-  const useIsomorphicLayoutEffect =
-    typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-  useIsomorphicLayoutEffect(() => {
-    gsap.to("#customScrollbar", {
-      scrollTrigger: {
-        start: 0,
-        end: "max",
-        onUpdate: (self) => {
-          setMaxScroll(self.end);
-          setScrollProgress(self.progress.toFixed(2));
-        },
-      },
-    });
-  }, []);
-
-  const handleStepClick = (progress: number) => {
-    gsap.to(window, { duration: 1, scrollTo: { y: progress * maxScroll } });
-  };
-
+  const scrollData = [
+    { subTitle: "Step 1" },
+    { subTitle: "Step 2" },
+    { subTitle: "Step 3" },
+    { subTitle: "Step 4" },
+    { subTitle: "Step 5" },
+    { subTitle: "Step 6" },
+    { subTitle: "Step 7" },
+  ];
   return (
-    <main className="min-h-screen relative bg-white">
-      <div style={{ height: "15000px" }} id="allTags"></div>
-
-      <div
+    <main className="min-h-screen bg-white">
+      <div style={{ height: "25000px" }}></div>
+      <SliderByScroll
+        data={scrollData}
+        textColor="text-blue-900"
+        sliderDefaultColor="bg-red-300"
+        sliderActiveColor="bg-yellow-400"
+      />
+      {/* <div
         id="customScroll"
         className="fixed left-10 top-10 h-96 flex flex-col justify-between after:absolute after:top-0 after:bottom-0  after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-300"
       >
         <hr
-          className="bg-blue-700 w-0.5 start-[13px] absolute transition-all duration-500"
+          className="bg-blue-700 w-0.5 start-[13px] absolute transition-all duration-300"
           style={{ height: `${Number(scrollProgress) * 100}%` }}
         />
         <div className="flex gap-x-3" onClick={() => handleStepClick(0)}>
@@ -124,7 +114,7 @@ export default function Home() {
             </h3>
           </div>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 }
