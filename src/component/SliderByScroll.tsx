@@ -33,6 +33,22 @@ export const SliderByScroll = ({
         },
       },
     });
+    const timeline = gsap.timeline({
+      repeat: 0,
+      yoyo: true,
+      defaults: { ease: "easeInOut", duration: 1 },
+    });
+
+    // timeline
+    //   .to("#step_1", { opacity: 1, x: 20, duration: 0.5 })
+    //   .to("#step_2", { opacity: 1, duration: 0.5, x: 20 })
+    //   .to("#step_3", { opacity: 1, duration: 0.5, x: 20 })
+    //   .to("#step_4", { opacity: 1, duration: 0.5, x: 20 })
+    //   .to("#step_5", { opacity: 1, duration: 0.5, x: 20 });
+
+    data.forEach((item, index) => {
+      timeline.to(`#step_${index + 1}`, { opacity: 1, x: 20, duration: 0.2 });
+    });
   }, []);
 
   const handleStepClick = (progress: number) => {
@@ -42,7 +58,7 @@ export const SliderByScroll = ({
   return (
     <div
       id="customScroll"
-      className={`fixed left-10 top-10 h-96 flex flex-col justify-between after:absolute after:top-0 after:bottom-0  after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-300`}
+      className={`absolute left-10 top-10 h-96 flex flex-col justify-between after:absolute after:top-0 after:bottom-0  after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-300`}
     >
       <hr
         className={`bg-blue-700 w-0.5 start-[13px] absolute transition-all duration-300`}
@@ -50,7 +66,9 @@ export const SliderByScroll = ({
       />
       {data.map((item, index: number) => (
         <div
+          id={`step_${index + 1}`}
           className="flex gap-x-3 cursor-pointer"
+          style={{ opacity: 0 }}
           onClick={() =>
             handleStepClick(index === 0 ? 0 : index / (data.length - 1))
           }
